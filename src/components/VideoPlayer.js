@@ -30,6 +30,7 @@ export default function VideoPlayer() {
         apiBaseUrl,
         muted: "true",
         autoplay: "true",
+        skin: 'defaultV2',
       };
 
       console.log("Player config:", config);
@@ -47,15 +48,7 @@ export default function VideoPlayer() {
 
   useEffect(() => {
     initialtePlayer();
-
-    return () => {
-      try {
-        VlCore?.dispose("my-player");
-        setIsPlayerInitialized(false);
-      } catch (err) {
-        console.warn("Dispose failed:", err);
-      }
-    };
+    return () => setIsPlayerInitialized(false);
   }, []);
 
   return (

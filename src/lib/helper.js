@@ -100,7 +100,7 @@ function setItem(key, value) {
 // App-specific accessors
 // =============================
 
-const DEFAULT_VIDEO_ID = "9ed7dee0-c719-11ec-bc25-a195c2a34357";
+const DEFAULT_VIDEO_ID = "2d6d8f3c-7393-41e4-ae1f-1a4f577e1c87";
 const ENV_API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const ENV_X_API_KEY = process.env.NEXT_PUBLIC_ENV_X_API_KEY;
 

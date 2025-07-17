@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import VLPlayerCore from "@viewlift/player/esm/index";
 import "@viewlift/player/esm/bundle.css";
-import Link from "next/link";
 import { getApiBaseUrl, getToken, getVideoId } from "@/lib/helper";
 
 export default function VideoPlayer() {

@@ -14,25 +14,27 @@ export default function VideoPlayer() {
 
   const showError = (message) => {
     setError(message);
-    setTimeout(() => setError(""), 5000); // Hide after 5s
+    setTimeout(() => setError(""), 5000);
   };
 
-  const initialtePlayer = async () => {
+  const initializePlayer = async () => {
     if (isPlayerInitialized) return;
+
     try {
       ensureVideoElement("player-wrapper", "my-player");
-      const videoId = getVideoId();
+
+      const videoId = getVideoId(); // e.g., from localStorage
       const apiBaseUrl = getApiBaseUrl();
       const token = await getToken();
 
       const config = {
         playerId: "my-player",
-        videoId,
+        videoId: videoId || "2d6d8f3c-7393-41e4-ae1f-1a4f577e1c87",
         token,
         apiBaseUrl,
         muted: "true",
         autoplay: "true",
-        skin: 'defaultV2',
+        skin: "defaultV2"
       };
 
       console.log("Player config:", config);
@@ -43,13 +45,13 @@ export default function VideoPlayer() {
         typeof e === "string"
           ? e
           : e?.response?.data?.errorCode || e?.msg || "Something went wrong";
-      console.error("Error:", e);
+      console.error("Player Init Error:", e);
       showError(errorMsg);
     }
   };
 
   useEffect(() => {
-    initialtePlayer();
+    initializePlayer();
 
     return () => {
       try {
@@ -70,23 +72,23 @@ export default function VideoPlayer() {
         </Link>
       </header>
 
-      <main className="flex items-center justify-center p-6">
-        <div className="w-full max-w-3xl bg-white rounded-xl shadow overflow-hidden">
-          <div id="player-wrapper" className="aspect-video bg-black">
-            <video
-              id="my-player"
-              className="video-js w-full h-full"
-              controls
-            ></video>
+      <main className="flex flex-col items-center justify-center p-6">
+        <div className="w-full max-w-4xl bg-white rounded-xl shadow overflow-hidden">
+          <div id="player-wrapper" className="w-full aspect-video bg-black relative">
+            {!isPlayerInitialized && (
+              <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/70">
+                <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            )}
           </div>
         </div>
-      </main>
 
-      {error && (
-        <div className="text-center mt-4 text-red-600 font-medium">
-          {error}
-        </div>
-      )}
+        {error && (
+          <div className="text-center mt-4 text-red-600 font-medium">
+            {error}
+          </div>
+        )}
+      </main>
     </div>
   );
 }

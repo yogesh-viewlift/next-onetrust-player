@@ -5,6 +5,7 @@ import Link from "next/link";
 import VLPlayerCore from "@viewlift/player/esm/index";
 import "@viewlift/player/esm/bundle.css";
 import { getApiBaseUrl, getToken, getVideoId } from "@/lib/helper";
+import { ensureVideoElement } from "@/lib/utils";
 
 export default function VideoPlayer() {
   const VlCore = VLPlayerCore();
@@ -19,6 +20,7 @@ export default function VideoPlayer() {
   const initialtePlayer = async () => {
     if (isPlayerInitialized) return;
     try {
+      ensureVideoElement("player-wrapper", "my-player");
       const videoId = getVideoId();
       const apiBaseUrl = getApiBaseUrl();
       const token = await getToken();
@@ -48,7 +50,15 @@ export default function VideoPlayer() {
 
   useEffect(() => {
     initialtePlayer();
-    return () => setIsPlayerInitialized(false);
+
+    return () => {
+      try {
+        VlCore?.dispose("my-player");
+        setIsPlayerInitialized(false);
+      } catch (err) {
+        console.warn("Dispose failed:", err);
+      }
+    };
   }, []);
 
   return (
@@ -62,7 +72,7 @@ export default function VideoPlayer() {
 
       <main className="flex items-center justify-center p-6">
         <div className="w-full max-w-3xl bg-white rounded-xl shadow overflow-hidden">
-          <div className="aspect-video bg-black">
+          <div id="player-wrapper" className="aspect-video bg-black">
             <video
               id="my-player"
               className="video-js w-full h-full"

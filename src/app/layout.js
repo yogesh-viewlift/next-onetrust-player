@@ -24,7 +24,12 @@ export default function RootLayout({ children }) {
           src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"
           data-domain-script="b145cde4-1906-4b54-a242-0206971848a8-test"
           strategy="beforeInteractive"
-          charSet="UTF-8"
+          charset="UTF-8"
+        />
+        <script 
+          src="https://cdn.cookielaw.org/consent/b145cde4-1906-4b54-a242-0206971848a8-test/OtAutoBlock.js" 
+          type="text/javascript" 
+          charset="UTF-8" 
         />
         <script id="optanon-wrapper" strategy="afterInteractive">
           {`function OptanonWrapper() { }`}
